@@ -13,18 +13,18 @@ import se.haleby.lab.spek2.rps.StateEvolution.EvolvedState
 import se.haleby.lab.spek2.rps.StateEvolution.evolve
 import se.haleby.lab.spek2.rps.StateTranslation.translateToDomain
 
-fun handle(events: Sequence<GameEvent>, cmd: GameCommand): Sequence<GameEvent> {
+fun handle(events: List<GameEvent>, cmd: GameCommand): List<GameEvent> {
     val state = events.evolve()
     return when (cmd) {
         is CreateGame -> when (state) {
             is EvolvedState -> throw GameCannotBeCreatedMoreThanOnce()
             else -> {
                 val (gameId, timestamp, creator, numberOfRounds) = cmd
-                sequenceOf(GameCreated(gameId, timestamp, creator, numberOfRounds))
+                listOf(GameCreated(gameId, timestamp, creator, numberOfRounds))
             }
         }
         is PlayHand -> when (state) {
-            is EvolvedState -> play(cmd, AccumulatedChanges.initializeFrom(state))
+            is EvolvedState -> play(cmd, AccumulatedChanges.initializeFrom(state)).toList()
             else -> throw GameDoesNotExist()
         }
     }
@@ -182,7 +182,7 @@ private class AccumulatedChanges private constructor(private val evolvedState: E
 
     override fun iterator(): Iterator<GameEvent> = events.iterator()
     fun evolve(e: GameEvent, vararg es: GameEvent) = AccumulatedChanges(
-        sequenceOf(e, *es).evolve(evolvedState)!!, events.addAll(listOf(e, *es)),
+        listOf(e, *es).evolve(evolvedState)!!, events.addAll(listOf(e, *es)),
     )
 
     operator fun plus(e: GameEvent) = evolve(e)
@@ -262,7 +262,7 @@ private object StateEvolution {
     }
 
 
-    fun Sequence<GameEvent>.evolve(currentState: EvolvedState? = null): EvolvedState? = fold(currentState, ::evolve)
+    fun List<GameEvent>.evolve(currentState: EvolvedState? = null): EvolvedState? = fold(currentState, ::evolve)
 
     fun evolve(currentState: EvolvedState?, e: GameEvent) = when (e) {
         is GameCreated -> EvolvedState(gameId = e.game, state = EvolvedGameState.Created, maxNumberOfRounds = e.maxNumberOfRounds)
