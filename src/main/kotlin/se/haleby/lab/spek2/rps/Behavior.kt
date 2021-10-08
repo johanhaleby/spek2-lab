@@ -34,7 +34,7 @@ private object GameLogic {
 
     fun play(cmd: PlayHand, accumulatedChanges: AccumulatedChanges): AccumulatedChanges {
         val (timestamp, playerId) = cmd
-        val state = accumulatedChanges.currentState
+        val state = accumulatedChanges.domainState
         val gameId = state.gameId
         return when (state) {
             is Created -> accumulatedChanges +
@@ -66,7 +66,7 @@ private object GameLogic {
     }
 
     private fun startNewRound(timestamp: Timestamp, accumulatedChanges: AccumulatedChanges): AccumulatedChanges {
-        val state = accumulatedChanges.currentState
+        val state = accumulatedChanges.domainState
         val currentRoundNumber = state.currentRound()?.roundNumber
         val newEvent = when {
             currentRoundNumber == null -> RoundStarted(state.gameId, timestamp, RoundNumber(1))
@@ -77,7 +77,7 @@ private object GameLogic {
     }
 
     private fun playHandAndEvaluateGameRules(cmd: PlayHand, accumulatedChanges: AccumulatedChanges): AccumulatedChanges {
-        val state = accumulatedChanges.currentState
+        val state = accumulatedChanges.domainState
         val (timestamp, playerId, shapeOfHand) = cmd
         val gameId = state.gameId
         val round = state.currentRound() ?: throw IllegalStateException("Cannot play when round is not started")
@@ -116,7 +116,7 @@ private object GameLogic {
         object NotEnded : GameStatus
     }
 
-    private fun determineGameStatus(accumulatedChanges: AccumulatedChanges): GameStatus = when (val state = accumulatedChanges.currentState) {
+    private fun determineGameStatus(accumulatedChanges: AccumulatedChanges): GameStatus = when (val state = accumulatedChanges.domainState) {
         is BothPlayersJoined -> if (state.isLastRoundInGame()) {
             val numberOfWinsPerPlayer = state.rounds
                 .groupBy { round -> (round as? Round.Won)?.winner }
@@ -137,7 +137,7 @@ private object GameLogic {
     }
 
     private val AccumulatedChanges.currentRound: Round
-        get() = when (val state = currentState) {
+        get() = when (val state = domainState) {
             is Started -> state.round
             is FirstPlayerJoined -> state.round
             is BothPlayersJoined -> state.rounds.last()
@@ -176,7 +176,7 @@ private object GameLogic {
 private data class Hand(val playerId: PlayerId, val shape: Shape)
 
 private class AccumulatedChanges private constructor(private val evolvedState: EvolvedState, val events: PersistentList<GameEvent>) {
-    val currentState: DomainState by lazy {
+    val domainState: DomainState by lazy {
         evolvedState.translateToDomain()
     }
 
