@@ -1,6 +1,7 @@
 # Spek2 Lab
 
 This lab is about getting to know [Spek2](https://www.spekframework.org/) for writing tests in Kotlin. You can decide yourself if you prefer to use [Gherkin](https://www.spekframework.org/gherkin/) or [Specification](https://www.spekframework.org/specification/) style.
+If you decide to use the Gherkin style, you can read up on what the different "keywords" mean [here](https://cucumber.io/docs/gherkin/reference/).
 
 Before starting, make sure to install the Intellij Plugin, follow instructions [here](https://www.spekframework.org/running/#ide).
 
