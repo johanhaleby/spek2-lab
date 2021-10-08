@@ -16,6 +16,7 @@ Each group should think and reflect about these things during the lab:
 4. Do you need to mess around with Hibernate?
 5. How does Spek compare to JUnit?
 6. Do you prefer Spek to JUnit?
-7. Any other reflections?
+7. Which Spek style did you chose? Why?
+8. Any other reflections?
 
 Note that it's not allowed to drink Skånerost or use Autogiro during this lab.
