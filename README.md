@@ -6,7 +6,7 @@ You can decide yourself if you prefer to use [Gherkin](https://www.spekframework
 You should familiarize yourself with the [domain model](https://github.com/johanhaleby/spek2-lab/tree/main/src/main/kotlin/se/haleby/lab/spek2/rps) then start writing
 awesome tests. Pair up with a colleague!
 
-Maybe there is a bug lurking around as well? Bonus points for spotting it and fixing it :)
+Maybe there is a bug lurking around somewhere as well? Bonus points for spotting and fixing it :)
 
 Each group should think and reflect about these things during the lab:
 
