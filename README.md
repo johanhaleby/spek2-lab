@@ -8,4 +8,14 @@ awesome tests. Pair up with a colleague!
 
 Maybe there is a bug lurking around as well? Bonus points for spotting it and fixing it :)
 
+Each group should think and reflect about these things during the lab:
+
+1. How do you write good tests?
+2. Do you need mocking? Why (not)?
+3. Do you need to write integration tests?
+4. Do you need to mess around with Hibernate?
+5. How does Spek compare to JUnit?
+6. Do you prefer Spek to JUnit?
+7. Any other reflections?
+
 Note that it's not allowed to drink Skånerost during this lab.
