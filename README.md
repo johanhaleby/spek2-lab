@@ -8,7 +8,7 @@ You should familiarize yourself with the [domain model](https://github.com/johan
 
 Maybe there is a bug lurking around somewhere as well? Bonus points for spotting and fixing it :)
 
-Are the test getting long and awkward? Have a look in the [pom.xml](pom.xml) file, maybe there's something that can help there? :)
+Are the test getting long and awkward? Remember the [fold](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/fold.html) function? Maybe it can help you with command composition?
 
 Each group should think and reflect about these things during the lab:
 
