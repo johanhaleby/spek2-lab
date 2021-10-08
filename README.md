@@ -18,4 +18,4 @@ Each group should think and reflect about these things during the lab:
 6. Do you prefer Spek to JUnit?
 7. Any other reflections?
 
-Note that it's not allowed to drink Skånerost during this lab.
+Note that it's not allowed to drink Skånerost or use Autogiro during this lab.
