@@ -24,7 +24,7 @@ fun handle(events: List<GameEvent>, cmd: GameCommand): List<GameEvent> {
             }
         }
         is PlayHand -> when (state) {
-            is EvolvedState -> play(cmd, AccumulatedChanges.initializeFrom(state)).toList()
+            is EvolvedState -> play(cmd, AccumulatedChanges.initializeFrom(state)).events
             else -> throw GameDoesNotExist()
         }
     }
@@ -175,12 +175,11 @@ private object GameLogic {
 
 private data class Hand(val playerId: PlayerId, val shape: Shape)
 
-private class AccumulatedChanges private constructor(private val evolvedState: EvolvedState, private val events: PersistentList<GameEvent>) : Sequence<GameEvent> {
+private class AccumulatedChanges private constructor(private val evolvedState: EvolvedState, val events: PersistentList<GameEvent>) {
     val currentState: DomainState by lazy {
         evolvedState.translateToDomain()
     }
 
-    override fun iterator(): Iterator<GameEvent> = events.iterator()
     fun evolve(e: GameEvent, vararg es: GameEvent) = AccumulatedChanges(
         listOf(e, *es).evolve(evolvedState)!!, events.addAll(listOf(e, *es)),
     )
