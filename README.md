@@ -13,7 +13,7 @@ Are the test getting long and awkward? Remember the [fold](https://kotlinlang.or
 
 Each group should think and reflect about these things during the lab:
 
-1. How do you write good tests?
+1. How do you write good tests? Anything in particular that you want to convey to the other teams?
 2. Do you need mocking? Why (not)?
 3. Do you need to write integration tests?
 4. Do you need to mess around with Hibernate?
